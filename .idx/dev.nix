@@ -9,6 +9,11 @@
     # pkgs.go
     pkgs.python311
     pkgs.python311Packages.pip
+    pkgs.python311Packages.pandas
+    pkgs.python311Packages.pytesseract
+    pkgs.python311Packages.streamlit
+    pkgs.python311Packages.reportlab
+    pkgs.tesseract5
     # pkgs.nodejs_20
     # pkgs.nodePackages.nodemon
   ];
