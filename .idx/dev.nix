@@ -45,7 +45,7 @@
   idx = {
     # Search for the extensions you want on https://open-vsx.org/
     extensions = [
-      "ms-python.python",
+      "ms-python.python"
       "ms-toolsai.jupyter"
     ];
     
@@ -55,18 +55,18 @@
       previews = {
         web = {
           command = [
-            "python3",
-            "-m",
-            "streamlit",
-            "run",
-            "app.py",
-            "--server.port",
-            "$PORT",
-            "--server.address",
-            "0.0.0.0",
-            "--server.enableCORS",
-            "false"
-          ];
+            "python3"]
+            "-m"
+            "streamlit";
+            "run"=
+            "app.py";
+            "--server.port"=
+            "$PORT";
+            "--server.address"=
+            "0.0.0.0";
+            "--server.enableCORS"=
+            "false";
+          };
           manager = "web";
         };
       };
