@@ -1,4 +1,3 @@
-nix
 { pkgs, ... }: {
   # Which nixpkgs channel to use.
   channel = "stable-24.05"; 
@@ -14,17 +13,17 @@ nix
     
     # All packages from requirements.txt, installed via Nix (Hyphens converted to underscores):
     pkgs.python311Packages.streamlit
-    pkgs.python311Packages.firebase_admin         # FIXED: firebase-admin -> firebase_admin
+    pkgs.python311Packages.firebase_admin
     pkgs.python311Packages.pytesseract
     pkgs.python311Packages.Pillow
     pkgs.python311Packages.pandas
-    pkgs.python311Packages.opencv_python         # FIXED: opencv-python -> opencv_python
+    pkgs.python311Packages.opencv_python
     pkgs.python311Packages.numpy
-    pkgs.python311Packages.python_dateutil       # FIXED: python-dateutil -> python_dateutil
+    pkgs.python311Packages.python_dateutil
     pkgs.python311Packages.tqdm
     pkgs.python311Packages.openpyxl
     pkgs.python311Packages.PyPDF2
-    pkgs.python311Packages.python_docx           # FIXED: python-docx -> python_docx
+    pkgs.python311Packages.python_docx
     pkgs.python311Packages.moviepy
     pkgs.python311Packages.SpeechRecognition
     pkgs.python311Packages.psutil
@@ -33,8 +32,8 @@ nix
     pkgs.python311Packages.seaborn
     
     # New dependencies for Advanced AI and Legal Analysis
-    pkgs.python311Packages.google_genai          # FIXED: google-genai -> google_genai
-    pkgs.python311Packages.scikit_learn          # FIXED: scikit-learn -> scikit_learn
+    pkgs.python311Packages.google_genai
+    pkgs.python311Packages.scikit_learn
   ];
 
   # Sets environment variables in the workspace
@@ -51,6 +50,7 @@ nix
     ];
     
     # Enable previews
+    # This 'previews' block is a direct child of the 'idx' block.
     previews = { 
       enable = true;
       previews = {
@@ -74,4 +74,3 @@ nix
     };
   };
 }
-
