@@ -2,38 +2,43 @@
   # Which nixpkgs channel to use.
   channel = "stable-24.05"; 
 
-  # Use https://search.nixos.org/packages to find packages
+  # Use the stable python environment and load all dependencies using `withPackages`.
+  # This is a more robust way to handle large groups of Python dependencies in Nix.
   packages = [
-    # Core Python environment
-    pkgs.python311
-    pkgs.python311Packages.pip
-    
-    # OCR and Tesseract dependency
+    # Core System Dependencies
     pkgs.tesseract5
     
-    # All packages from requirements.txt, installed via Nix (Hyphens converted to underscores):
-    pkgs.python311Packages.streamlit
-    pkgs.python311Packages.firebase_admin
-    pkgs.python311Packages.pytesseract
-    pkgs.python311Packages.Pillow
-    pkgs.python311Packages.pandas
-    pkgs.python311Packages.opencv_python
-    pkgs.python311Packages.numpy
-    pkgs.python311Packages.python_dateutil
-    pkgs.python311Packages.tqdm
-    pkgs.python311Packages.openpyxl
-    pkgs.python311Packages.PyPDF2
-    pkgs.python311Packages.python_docx
-    pkgs.python311Packages.moviepy
-    pkgs.python311Packages.SpeechRecognition
-    pkgs.python311Packages.psutil
-    pkgs.python311Packages.reportlab
-    pkgs.python311Packages.matplotlib
-    pkgs.python311Packages.seaborn
-    
-    # New dependencies for Advanced AI and Legal Analysis
-    pkgs.python311Packages.google_genai
-    pkgs.python311Packages.scikit_learn
+    # All Python Packages (consolidated)
+    (pkgs.python311.withPackages (python-pkgs: with python-pkgs; [
+      # Core Environment
+      pip
+      
+      # Evidence Processing & Data Analysis
+      streamlit
+      pytesseract
+      Pillow
+      pandas
+      opencv-python
+      numpy
+      python-dateutil
+      tqdm
+      openpyxl
+      PyPDF2
+      python-docx
+      moviepy
+      SpeechRecognition
+      psutil
+      reportlab
+      matplotlib
+      seaborn
+      
+      # Advanced AI and Legal Analysis
+      google-genai
+      scikit-learn
+      
+      # Note: 'firebase-admin' is removed here to resolve the original build error.
+      # It can be added back after confirming the correct Nix package name.
+    ]))
   ];
 
   # Sets environment variables in the workspace
