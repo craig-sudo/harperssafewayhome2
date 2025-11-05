@@ -1,35 +1,72 @@
 { pkgs, ... }: {
-  # Let Nix handle shader compilation for Flutter
-  # hardware.opengl.enable = true;
+  # Which nixpkgs channel to use.
+  channel = "stable-24.05"; 
 
-  # Tell Nix to use the correct C++ stdlib for Flutter
-  # NIXOS_CC_WRAPPER_TARGET_HOST_x86_64_unknown_linux_gnu = "c++";
-
-  # And to use the correct linker
-  # NIXOS_LD_WRAPPER_TARGET_HOST_x86_64_unknown_linux_gnu = "ld";
-
-  # Enter a shell with the flutter sdk available
-  channel = "stable-23.11"; # Or "unstable"
+  # Use https://search.nixos.org/packages to find packages
   packages = [
+    # Core Python environment
     pkgs.python311
     pkgs.python311Packages.pip
-    # Pytesseract dependency
-    pkgs.tesseract
+    
+    # OCR and Tesseract dependency
+    pkgs.tesseract5
+    
+    # All packages from requirements.txt, installed via Nix:
+    pkgs.python311Packages.streamlit
+    pkgs.python311Packages.firebase_admin
+    pkgs.python311Packages.pytesseract
+    pkgs.python311Packages.Pillow
+    pkgs.python311Packages.pandas
+    pkgs.python311Packages.opencv-python
+    pkgs.python311Packages.numpy
+    pkgs.python311Packages.python-dateutil
+    pkgs.python311Packages.tqdm
+    pkgs.python311Packages.openpyxl
+    pkgs.python311Packages.PyPDF2
+    pkgs.python311Packages.python-docx
+    pkgs.python311Packages.moviepy
+    pkgs.python311Packages.SpeechRecognition
+    pkgs.python311Packages.psutil
+    pkgs.python311Packages.reportlab
+    pkgs.python311Packages.matplotlib
+    pkgs.python311Packages.seaborn
+    
+    # New dependencies for Advanced AI and Legal Analysis
+    pkgs.python311Packages.google_genai 
+    pkgs.python311Packages.scikit-learn
   ];
+
+  # Sets environment variables in the workspace
+  env = {
+    GEMINI_API_KEY = "AIzaSyCMbuJT7r6HE1vX0tWANYIX71QFj5_adTI";
+  };
+
   idx = {
-    # Search for extensions in the VS Code Marketplace.
-    # See https://open-vsx.org/ for available extensions.
+    # Search for the extensions you want on https://open-vsx.org/
     extensions = [
       "ms-python.python"
       "ms-toolsai.jupyter"
     ];
-
+    
     # Enable previews
     previews = {
       enable = true;
       previews = {
         web = {
-          command = ["streamlit" "run" "app.py" "--server.port" "$PORT" "--server.address" "0.0.0.0" "--server.enableCORS" "false"];
+          # CORRECTED COMMAND: The entire command as a single list of strings
+          command = [
+            "python3" 
+            "-m" 
+            "streamlit" 
+            "run" 
+            "app.py" 
+            "--server.port" 
+            "$PORT" 
+            "--server.address" 
+            "0.0.0.0" 
+            "--server.enableCORS" 
+            "false"
+          ];
           manager = "web";
         };
       };
@@ -38,15 +75,9 @@
     # Workspace lifecycle hooks
     workspace = {
       # Runs when a workspace is first created
-      onCreate = {
-        # Example: install JS dependencies from NPM
-        install-dependencies = "pip install -r requirements.txt";
-      };
+      onCreate = {}; 
       # Runs when the workspace is (re)started
-      onStart = {
-        # Example: start a background task to watch and re-build backend code
-        # watch-backend = "npm run watch-backend";
-      };
+      onStart = {}; 
     };
   };
 }

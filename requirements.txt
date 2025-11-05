@@ -1,3 +1,5 @@
+streamlit
+firebase-admin
 pytesseract==0.3.10
 Pillow==10.0.1
 pandas==2.1.3
@@ -8,7 +10,8 @@ tqdm==4.66.1
 openpyxl==3.1.2
 PyPDF2==3.0.1
 python-docx==0.8.11
-moviepy
+# Pinned stable version for video processing
+moviepy==1.0.3 
 SpeechRecognition
 psutil
 reportlab
@@ -16,5 +19,5 @@ matplotlib
 seaborn
 
 # New dependencies for Advanced AI and Legal Analysis
-google-genai # For Gemini API access
-scikit-learn # For basic classification/keyword analysis
+google-genai 
+scikit-learn
