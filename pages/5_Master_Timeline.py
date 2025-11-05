@@ -3,7 +3,8 @@ import streamlit as st
 import pandas as pd
 import os
 import tempfile
-from evidence_timeline_generator import generate_timeline
+from evidence_timeline_generator import 
+generate_timeline
 from utils import load_exhibit_data
 
 st.set_page_config(
