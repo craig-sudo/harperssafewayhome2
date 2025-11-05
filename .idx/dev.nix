@@ -60,7 +60,7 @@
             "-m"
             "streamlit"
             "run"
-            "app.py"
+            "streamlit_app.py"
             "--server.port"
             "$PORT"
             "--server.address"

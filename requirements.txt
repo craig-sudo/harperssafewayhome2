@@ -21,3 +21,4 @@ seaborn
 # New dependencies for Advanced AI and Legal Analysis
 google-genai 
 scikit-learn
+langchain
