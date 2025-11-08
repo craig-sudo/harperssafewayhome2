@@ -1,10 +1,16 @@
+# auto_filing_bot.py
 
+import subprocess
+import os
+import shutil
+import time
 from pathlib import Path
 
 # --- Configuration ---
 # Your Firebase Service Account Key file name
 # Place this JSON file in the 'config/' folder of your project
-FIREBASE_KEY_FILE = 'config/harpers-safeway-home-firebase-adminsdk-abc12.json'
+# FIREBASE_KEY_FILE = 'config/harpers-safeway-home-firebase-adminsdk-xxxxx.json' # Temporarily commented out
+
 def run_script(script_name, args="", check_output=False):
     """Helper function to run the existing project scripts."""
     print(f"\n--- Running: {script_name} {args} ---")
@@ -12,11 +18,11 @@ def run_script(script_name, args="", check_output=False):
         command = ["python", "-u", str(script_name)] + args.split()
         if check_output:
             result = subprocess.run(command, check=True, capture_output=True, text=True)
-            print(f"--- SUCCESS: {script_name} finished ---")
+            print(f"--- SUCCESS: {script_name} finished ---\n")
             return result.stdout
         else:
             subprocess.run(command, check=True)
-            print(f"--- SUCCESS: {script_name} finished ---")
+            print(f"--- SUCCESS: {script_name} finished ---\n")
             return ""
     except subprocess.CalledProcessError as e:
         print(f"--- ERROR: {script_name} failed. ---")
@@ -30,11 +36,9 @@ def run_script(script_name, args="", check_output=False):
 
 def setup_environment():
     """Sets environment variables needed for Firebase (Phase 2)."""
-    if os.path.exists(FIREBASE_KEY_FILE):
-        print("Setting up Firebase credentials...")
-        os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = FIREBASE_KEY_FILE
-    else:
-        print(f"WARNING: Firebase key {FIREBASE_KEY_FILE} not found. Skipping cloud integration. Please ensure it's in the 'config/' folder.")
+    # Firebase integration is temporarily disabled as requested.
+    print("Firebase integration is temporarily disabled. Skipping Firebase environment setup.")
+    pass
 
 def automate_exhibit_package():
     """
@@ -43,10 +47,13 @@ def automate_exhibit_package():
     print("🤖 AUTO-FILING BOT STARTED")
     setup_environment()
     
+    # --- NEW PHASE 0: GOOGLE WORKSPACE SYNC ---
+    print("\n[PHASE 0/3] Syncing Google Drive and Workspace Data...")
+    run_script("google_workspace_sync.py")
+
     # --- PHASE 1: OCR, Organization, and Renaming ---
     print("\n[PHASE 1/3] Running Core OCR and Organization...")
     # 1. Run the primary evidence processor (to generate the core CSV data)
-    # This script should generate a CSV in the 'output' folder. We need to find its name.
     run_script("evidence_processor.py") 
     
     # Assuming evidence_processor.py creates a CSV like 'harper_evidence_results_YYYYMMDD_HHMMSS.csv'
@@ -70,7 +77,7 @@ def automate_exhibit_package():
     # --- PHASE 2: AI Enrichment (Gemini/Google Integration) ---
     print("\n[PHASE 2/3] Running AI and Data Enrichment...")
     # 3. Analyze the new evidence using Gemini via the AI Analyzer (adjusts relevance codes and priority)
-    # ai_legal_analyzer.py is assumed to read the latest processed CSV and update it
+    # This script will run even without Firebase credentials, but cloud integration features might be limited.
     run_script("ai_legal_analyzer.py") 
 
     # --- PHASE 3: Final Court Package Assembly ---

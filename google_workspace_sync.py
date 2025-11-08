@@ -47,6 +47,7 @@ def search_and_download_evidence(service):
     print("Searching Google Drive for external evidence...")
     
     # Define search queries for common external evidence types
+    # This query finds GeoJSON, CSV files, and Documents that might contain key words
     search_query = ("mimeType='application/vnd.google-apps.document' or "
                     "name contains 'GeoJSON' or "
                     "name contains 'Email Export' or "
