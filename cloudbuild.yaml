@@ -1,0 +1,15 @@
+steps:
+- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+  args:
+  - gcloud
+  - functions
+  - deploy
+  - process-pro-se-veritas-evidence  # <-- Your Function Name
+  - --gen2
+  - --runtime=python311
+  - --region=us-central1           # <-- Match your function region
+  - --source=.
+  - --entry-point=process_document # <-- Your Python function name
+  - --trigger-bucket=pro-se-veritas-input-files # <-- Your GCS bucket
+  # Add any other flags like memory, service account, etc.
+timeout: 1600s
